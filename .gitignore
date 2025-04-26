@@ -1,0 +1,61 @@
+# Игнорируем временные файлы Unity
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Mm]emoryCaptures/
+
+# Игнорируем пользовательские настройки Unity
+UserSettings/
+
+# Игнорируем сборки, кэш и временные файлы
+*.stackdump
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# Игнорируем файлы автогенерации
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.user
+*.userprefs
+*.tmp
+*.ide
+*.pidb.meta
+
+# Игнорируем текстурные кэши и пакеты
+[Tt]exture[Cc]ache/
+*.unitypackage
+
+# Игнорируем файлы ОС
+.DS_Store
+Thumbs.db
+
+# Игнорируем IDE и редакторы
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+*.sublime-workspace
+*.sublime-project
+
+# Игнорируем пакеты UPM, если используются
+Packages/com.unity.package-manager-ui/
+
+# Игнорируем файлы настройки локальных устройств
+*.config
+*.prefs
+
+# Игнорируем плагины и их временные файлы
+*.plugin.dll
+*.plugin.so
+*.plugin.dylib
