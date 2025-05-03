@@ -7,8 +7,6 @@ namespace Game2D.Scripts.Projectiles
 {
     public class ProjectilePool : MonoBehaviour
     {
-        public static ProjectilePool Singleton {get; private set;}
-        
         [SerializeField]
         private Projectile projectilePrefab;
         [SerializeField]
@@ -25,15 +23,6 @@ namespace Game2D.Scripts.Projectiles
             for (var i = 0; i < maxProjectiles; i++)
             {
                 AddProjectileToPool();
-            }
-
-            if (Singleton != null && Singleton != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Singleton = this;
             }
         }
 

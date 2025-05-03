@@ -1,18 +1,18 @@
-﻿using System;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Game2D.Scripts.Projectiles
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class Projectile : MonoBehaviour
+    public class Projectile : MonoBehaviour, IReturnableToPool
     {
         public float initialForce;
         public float liveTime;
-        private float _bornTime;
 
+        private ProjectilePool _projectilePool;
         private Rigidbody2D _rigidbody2D;
-        
+        private Coroutine _lifeCoroutine;
+
         private void Awake()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
@@ -20,20 +20,25 @@ namespace Game2D.Scripts.Projectiles
 
         private void OnEnable()
         {
-            _bornTime = Time.time;
+            _lifeCoroutine = StartCoroutine(LifeCoroutine());
         }
 
         private void OnDisable()
         {
-            _bornTime = 0f;
+            StopCoroutine(_lifeCoroutine);
         }
 
-        private void FixedUpdate()
+        private IEnumerator LifeCoroutine()
         {
-            if (Time.time - _bornTime >= liveTime)
-            {
-                ProjectilePool.Singleton.DeallocateProjectile(this);
-            }
+            yield return new WaitForSeconds(liveTime);
+
+            if (isActiveAndEnabled)
+                ReturnToPool();
+        }
+
+        public void Initialize(ProjectilePool projectilePool)
+        {
+            _projectilePool = projectilePool;
         }
 
         public void Launch(Vector2 startPosition, Vector2 direction)
@@ -42,9 +47,9 @@ namespace Game2D.Scripts.Projectiles
             _rigidbody2D.AddForce(direction * initialForce, ForceMode2D.Impulse);
         }
 
-        private void OnCollisionEnter2D(Collision2D collision2D)
+        public void ReturnToPool()
         {
-            ProjectilePool.Singleton.DeallocateProjectile(this);
+            _projectilePool.DeallocateProjectile(this);
         }
     }
 }
