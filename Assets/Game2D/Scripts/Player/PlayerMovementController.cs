@@ -7,6 +7,7 @@ namespace Game2D.Scripts.Player
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(Collider2D))]
+    [RequireComponent(typeof(Animator))]
     public class PlayerMovementController : MonoBehaviour
     {
         [Header("Movement")] public float moveSpeed;
@@ -37,10 +38,17 @@ namespace Game2D.Scripts.Player
         private bool _isLanding;
 
         private Rigidbody2D _rigidbody2D;
+        private Animator _animator;
+
+        private readonly int DASH_ANIM_KEY = Animator.StringToHash("Dash");
+        private readonly int GROUNDED_ANIM_KEY = Animator.StringToHash("Grounded");
+        private readonly int JUMP_ANIM_KEY = Animator.StringToHash("Jump");
+        private readonly int RUN_ANIM_KEY = Animator.StringToHash("Run");
 
         private void Awake()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
+            _animator = GetComponent<Animator>();
         }
 
         private void FixedUpdate()
@@ -50,6 +58,9 @@ namespace Game2D.Scripts.Player
             {
                 _rigidbody2D.velocity = new Vector2(_moveDirectionX * moveSpeed, _rigidbody2D.velocity.y);
             }
+            
+            _animator.SetBool(RUN_ANIM_KEY, _rigidbody2D.velocity.x != 0);
+                
 
             // Allow to jump higher on button hold
             if (_isJumping && Time.fixedTime - _jumpStartTime <= jumpAllowAdjustTime)
@@ -95,9 +106,10 @@ namespace Game2D.Scripts.Player
 
                     // To reset speed for jump to work correctly
                     _rigidbody2D.velocity = Vector2.zero;
-
+                    
                     _rigidbody2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
                     _jumpStartTime = Time.time;
+                    _animator.SetTrigger(JUMP_ANIM_KEY);
 
                     // Consume double jump if not jump from ground
                     if (!_isGrounded && !isCoyoteTimeJump && hasDoubleJump)
@@ -122,6 +134,7 @@ namespace Game2D.Scripts.Player
         private IEnumerator DashCoroutine()
         {
             _isDashing = true;
+            _animator.SetBool(DASH_ANIM_KEY, _isDashing);
             _rigidbody2D.gravityScale = 0f;
 
             // To reset speed for dash to work correctly
@@ -133,6 +146,7 @@ namespace Game2D.Scripts.Player
             yield return new WaitForSeconds(dashDuration);
 
             _isDashing = false;
+            _animator.SetBool(DASH_ANIM_KEY, _isDashing);
             _rigidbody2D.gravityScale = 1f;
         }
 
@@ -141,6 +155,7 @@ namespace Game2D.Scripts.Player
             if (collision.gameObject.layer.Equals(LayerMask.NameToLayer("Ground")))
             {
                 _isGrounded = true;
+                _animator.SetBool(GROUNDED_ANIM_KEY, _isGrounded);
                 _isLanding = false;
                 hasDoubleJump = true;
             }
@@ -151,6 +166,7 @@ namespace Game2D.Scripts.Player
             if (collision.gameObject.layer.Equals(LayerMask.NameToLayer("Ground")))
             {
                 _isGrounded = false;
+                _animator.SetBool(GROUNDED_ANIM_KEY, _isGrounded);
                 _lastTimeGrounded = Time.time;
             }
         }
