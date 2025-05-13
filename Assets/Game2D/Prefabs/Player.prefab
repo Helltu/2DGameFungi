@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 2551482723015782247}
   - component: {fileID: 8002745889494802861}
   - component: {fileID: 2235711769281081396}
+  - component: {fileID: 4822959810927160013}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -79,7 +80,7 @@ MonoBehaviour:
   projectileSpawnDistance: 0.5
   projectileInitialForce: 1
   projectileLiveTime: 3
-  projectilePool: {fileID: 2705131291248455046, guid: b8c2a9772cee6d742b09e35c9225de4e, type: 3}
+  projectilePool: {fileID: 0}
 --- !u!114 &-8333082031310634253
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -408,3 +409,24 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.73, y: 0.76}
   m_EdgeRadius: 0
+--- !u!95 &4822959810927160013
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714585503513830732}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5876067a3d8078647a8953067e6d4806, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

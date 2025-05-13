@@ -54,6 +54,7 @@ namespace Game2D.Scripts.Player
 
         private readonly int DASH_ANIM_KEY = Animator.StringToHash("Dash");
         private readonly int GROUNDED_ANIM_KEY = Animator.StringToHash("Grounded");
+        private readonly int ON_WALL_ANIM_KEY = Animator.StringToHash("OnWall");
         private readonly int JUMP_ANIM_KEY = Animator.StringToHash("Jump");
         private readonly int RUN_ANIM_KEY = Animator.StringToHash("Run");
         
@@ -264,6 +265,7 @@ namespace Game2D.Scripts.Player
             Debug.Log("Wall sliding enter");
 
             _isOnWall = true;
+            _animator.SetBool(ON_WALL_ANIM_KEY, _isOnWall);
             _isLanding = false;
             hasDoubleJump = true;
 
@@ -299,6 +301,7 @@ namespace Game2D.Scripts.Player
             Debug.Log("Wall sliding exit");
 
             _isOnWall = false;
+            _animator.SetBool(ON_WALL_ANIM_KEY, _isOnWall);
             _lastTimeGrounded = Time.time;
 
             _rigidbody2D.gravityScale = 1;
