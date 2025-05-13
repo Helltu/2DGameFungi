@@ -390,18 +390,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 1714585503513830732, guid: eac8d3bd298dea84fa1474b8b91e2c63, type: 3}
-      propertyPath: m_TagString
-      value: Player
-      objectReference: {fileID: 0}
     - target: {fileID: 4176553147845389909, guid: eac8d3bd298dea84fa1474b8b91e2c63, type: 3}
       propertyPath: projectilePool
       value: 
       objectReference: {fileID: 2705131291109304628}
-    - target: {fileID: 4822959810927160013, guid: eac8d3bd298dea84fa1474b8b91e2c63, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 5876067a3d8078647a8953067e6d4806, type: 2}
     - target: {fileID: 8098378310971826567, guid: eac8d3bd298dea84fa1474b8b91e2c63, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.1667736
