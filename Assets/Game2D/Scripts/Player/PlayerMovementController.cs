@@ -7,9 +7,9 @@ namespace Game2D.Scripts.Player
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(PlayerInput))]
     [RequireComponent(typeof(Collider2D))]
-    [RequireComponent(typeof(Animator))]
     public class PlayerMovementController : MonoBehaviour, IDoubleJumpResetable
     {
+        [SerializeField] private Transform visuals;
         [Header("Movement")] public float moveSpeed;
 
         private float _moveDirectionX;
@@ -43,6 +43,7 @@ namespace Game2D.Scripts.Player
         [Header("Wall slide")] public bool enableWallGrip;
         public float wallSlideDelay;
         public float slideSpeed;
+        public float wallSitAnimSpriteOffset;
 
         private GameObject _wallSlidingFrom;
         private bool _isOnWall;
@@ -61,7 +62,7 @@ namespace Game2D.Scripts.Player
         private void Awake()
         {
             _rigidbody2D = GetComponent<Rigidbody2D>();
-            _animator = GetComponent<Animator>();
+            _animator = GetComponentInChildren<Animator>();
         }
 
         private void FixedUpdate()
@@ -266,6 +267,7 @@ namespace Game2D.Scripts.Player
 
             _isOnWall = true;
             _animator.SetBool(ON_WALL_ANIM_KEY, _isOnWall);
+            visuals.Translate(new Vector3(_isFacingRight? wallSitAnimSpriteOffset : -wallSitAnimSpriteOffset, 0f, 0f)); 
             _isLanding = false;
             hasDoubleJump = true;
 
@@ -302,6 +304,7 @@ namespace Game2D.Scripts.Player
 
             _isOnWall = false;
             _animator.SetBool(ON_WALL_ANIM_KEY, _isOnWall);
+            visuals.Translate(new Vector3(_isFacingRight? -wallSitAnimSpriteOffset : wallSitAnimSpriteOffset, 0f, 0f)); 
             _lastTimeGrounded = Time.time;
 
             _rigidbody2D.gravityScale = 1;
